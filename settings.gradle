@@ -1,0 +1,2 @@
+include ':silk'
+rootProject.name = "silk"
