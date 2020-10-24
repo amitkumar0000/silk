@@ -14,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             startActivityForResult(Intent(this, GoogleLoginActivity::class.java), 100)
-        }, 3000)
+        }, 1000)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -23,8 +23,15 @@ class SplashActivity : AppCompatActivity() {
         when(requestCode) {
             100 -> {
                 when(resultCode) {
-                    Activity.RESULT_OK ->
-                        startActivity(Intent(this, MainActivity::class.java))
+                    Activity.RESULT_OK -> {
+                        val name = data?.getStringExtra("ACCOUNT_NAME")
+                        val url = data?.getStringExtra("ACCOUNT_PHOTO_URL")
+                        startActivity(Intent(this, MainActivity::class.java).also {
+                            it.putExtra("ACCOUNT_NAME",name)
+                            it.putExtra("ACCOUNT_PHOTO_URL",url)
+                        })
+                        finish()
+                    }
                     Activity.RESULT_CANCELED ->
                         Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
                 }

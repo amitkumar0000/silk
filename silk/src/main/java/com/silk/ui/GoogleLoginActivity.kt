@@ -27,6 +27,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestProfile()
                 .build()
 
         // Build a GoogleSignInClient with the options specified by gso.
@@ -37,7 +38,10 @@ class GoogleLoginActivity : AppCompatActivity() {
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account != null) {
-            setResult(Activity.RESULT_OK)
+            setResult(Activity.RESULT_OK, Intent().also {
+                it.putExtra("ACCOUNT_NAME", account.displayName)
+                it.putExtra("ACCOUNT_PHOTO_URL", account.photoUrl)
+            })
             finish()
         }
         signInButton.setOnClickListener {
@@ -64,7 +68,10 @@ class GoogleLoginActivity : AppCompatActivity() {
                 completedTask.getResult(ApiException::class.java)
 
             // Signed in successfully, show authenticated UI.
-            setResult(RESULT_OK)
+            setResult(Activity.RESULT_OK, Intent().also {
+                it.putExtra("ACCOUNT_NAME", account?.displayName)
+                it.putExtra("ACCOUNT_PHOTO_URL", account?.photoUrl)
+            })
             finish()
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
