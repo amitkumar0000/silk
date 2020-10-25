@@ -40,7 +40,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         if(account != null) {
             setResult(Activity.RESULT_OK, Intent().also {
                 it.putExtra("ACCOUNT_NAME", account.displayName)
-                it.putExtra("ACCOUNT_PHOTO_URL", account.photoUrl)
+                it.putExtra("ACCOUNT_PHOTO_URL", account.photoUrl.toString())
             })
             finish()
         }
