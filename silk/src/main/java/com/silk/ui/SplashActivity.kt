@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
                     Activity.RESULT_OK -> {
                         val name = data?.getStringExtra("ACCOUNT_NAME")
                         val url = data?.getStringExtra("ACCOUNT_PHOTO_URL")
-                        startActivity(Intent(this, MainActivity::class.java).also {
+                        startActivity(Intent(this, HomeActivity::class.java).also {
                             it.putExtra("ACCOUNT_NAME",name)
                             it.putExtra("ACCOUNT_PHOTO_URL",url)
                         })
